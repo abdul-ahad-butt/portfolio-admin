@@ -4,7 +4,7 @@ import { Lock, User, Eye, EyeOff, AlertCircle, Zap } from 'lucide-react';
 
 // API_BASE is intentionally empty — Vite proxies /api/* → http://localhost:3001
 // (see vite.config.ts server.proxy). This avoids CORS and ERR_CONNECTION_REFUSED.
-const API_BASE = '';
+const API_BASE = import.meta.env.DEV ? '' : 'https://my-portfolio.abdulahadbutt420.workers.dev';
 
 
 export default function Login() {

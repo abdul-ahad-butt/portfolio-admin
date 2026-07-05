@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 // Connect directly to the Cloudflare Worker running the portfolio
-const API_BASE = 'https://my-portfolio.abdulahadbutt420.workers.dev';
+const API_BASE = import.meta.env.DEV ? '' : 'https://my-portfolio.abdulahadbutt420.workers.dev';
 
 
 // ── Helpers ──────────────────────────────────────────────────────────────────

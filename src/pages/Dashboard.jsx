@@ -6,15 +6,14 @@ import {
   User, Filter, ChevronDown, X,
 } from 'lucide-react';
 
-// API_BASE is intentionally empty — Vite proxies /api/* → http://localhost:3001
-// (see vite.config.ts server.proxy). This avoids CORS and ERR_CONNECTION_REFUSED.
-const API_BASE = '';
+// Connect directly to the Cloudflare Worker running the portfolio
+const API_BASE = 'https://my-portfolio.abdulahadbutt420.workers.dev';
 
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function getToken() {
-  return localStorage.getItem('aab_admin_token') ?? '';
+  return localStorage.getItem('aab_admin_token') ?? 'my-secret-admin-key';
 }
 
 function timeAgo(dateStr) {
@@ -279,7 +278,7 @@ export default function Dashboard() {
     else setRefreshing(true);
     setError('');
     try {
-      const res = await fetch(`${API_BASE}/api/queries`, {
+      const res = await fetch(`${API_BASE}/api/inquiries`, {
         headers: { 'X-Admin-Key': getToken() },
       });
       if (res.status === 401) {
@@ -291,7 +290,7 @@ export default function Dashboard() {
       if (data.success) setQueries(data.data);
       else setError(data.error ?? 'Failed to load queries.');
     } catch {
-      setError('Cannot connect to the backend. Ensure it is running on port 3001.');
+      setError('Cannot connect to the backend. Please check the network connection.');
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -307,7 +306,7 @@ export default function Dashboard() {
 
   const handleStatusChange = async (id, status) => {
     try {
-      await fetch(`${API_BASE}/api/queries/${id}`, {
+      await fetch(`${API_BASE}/api/inquiries/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json', 'X-Admin-Key': getToken() },
         body: JSON.stringify({ status }),
@@ -320,7 +319,7 @@ export default function Dashboard() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`${API_BASE}/api/queries/${id}`, {
+      await fetch(`${API_BASE}/api/inquiries/${id}`, {
         method: 'DELETE',
         headers: { 'X-Admin-Key': getToken() },
       });
@@ -336,7 +335,7 @@ export default function Dashboard() {
       if (!window.confirm(`Delete ${selectedIds.length} inquiries? This cannot be undone.`)) return;
     }
     try {
-      await fetch(`${API_BASE}/api/queries/bulk`, {
+      await fetch(`${API_BASE}/api/inquiries/bulk`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-Admin-Key': getToken() },
         body: JSON.stringify({ action, ids: selectedIds }),

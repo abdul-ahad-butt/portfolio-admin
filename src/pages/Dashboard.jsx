@@ -6,8 +6,8 @@ import {
   User, Filter, ChevronDown, X,
 } from 'lucide-react';
 
-// Connect directly to the Cloudflare Worker running the portfolio
-const API_BASE = import.meta.env.DEV ? '' : 'https://my-portfolio.abdulahadbutt420.workers.dev';
+// Connect directly to the Cloudflare Worker running the portfolio or localhost in dev
+const API_BASE = 'https://my-portfolio.abdulahadbutt420.workers.dev';
 
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -280,6 +280,7 @@ export default function Dashboard() {
     try {
       const res = await fetch(`${API_BASE}/api/inquiries`, {
         headers: { 'X-Admin-Key': getToken() },
+        cache: 'no-store',
       });
       if (res.status === 401) {
         localStorage.removeItem('aab_admin_token');

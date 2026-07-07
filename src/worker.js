@@ -1,4 +1,4 @@
-export default {
+Rexport default {
   async fetch(request, env) {
     try {
       // Try to fetch the static asset

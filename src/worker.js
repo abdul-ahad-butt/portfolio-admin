@@ -6,7 +6,7 @@ export default {
       
       // If the asset is not found (404), fallback to index.html for SPA routing
       if (response.status === 404) {
-        return env.ASSETS.fetch(new Request(new URL("/", request.url)));
+        return env.ASSETS.fetch(new Request(new URL("/index.html", request.url)));
       }
       
       return response;

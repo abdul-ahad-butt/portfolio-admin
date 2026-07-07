@@ -6,8 +6,7 @@ import {
   User, Filter, ChevronDown, X,
 } from 'lucide-react';
 
-// Connect directly to the Cloudflare Worker running the portfolio or localhost in dev
-const API_BASE = 'https://my-portfolio.abdulahadbutt420.workers.dev';
+import { API_BASE_URL as API_BASE } from '../config';
 
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -210,7 +209,9 @@ function QueryCard({ query, onStatusChange, onDelete, isSelected, onToggleSelect
               />
             )}
             <a
-              href={`mailto:${query.email}`}
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${query.email}`}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
                 padding: '0.4rem 0.8rem', borderRadius: '0.5rem',
@@ -307,10 +308,10 @@ export default function Dashboard() {
 
   const handleStatusChange = async (id, status) => {
     try {
-      await fetch(`${API_BASE}/api/inquiries/${id}`, {
-        method: 'PATCH',
+      await fetch(`${API_BASE}/api/inquiries/bulk`, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-Admin-Key': getToken() },
-        body: JSON.stringify({ status }),
+        body: JSON.stringify({ action: status, ids: [id] }),
       });
       setQueries(prev => prev.map(q => q.id === id ? { ...q, status } : q));
     } catch {

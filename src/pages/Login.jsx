@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, User, Eye, EyeOff, AlertCircle, Zap } from 'lucide-react';
 
-// API_BASE is intentionally empty — Vite proxies /api/* → http://localhost:3001
-// (see vite.config.ts server.proxy). This avoids CORS and ERR_CONNECTION_REFUSED.
-const API_BASE = import.meta.env.DEV ? '' : 'https://my-portfolio.abdulahadbutt420.workers.dev';
+import { API_BASE_URL as API_BASE } from '../config';
 
 
 export default function Login() {
@@ -42,7 +40,7 @@ export default function Login() {
         navigate('/dashboard', { replace: true });
       }
     } catch {
-      setError('Unable to reach the server. Ensure the backend is running on port 3001.');
+      setError('Network error: Unable to connect to the authentication server.');
     } finally {
       setLoading(false);
     }

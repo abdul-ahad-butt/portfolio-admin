@@ -87,7 +87,7 @@
         <!-- Drawer footer -->
         <div class="q-pa-md">
           <q-separator dark class="q-mb-md" />
-          <div class="text-caption text-grey-6 text-center">Backend: localhost:3001</div>
+          <div class="text-caption text-grey-6 text-center">Backend: Cloudflare Worker</div>
           <div class="text-caption text-grey-7 text-center q-mt-xs">Portfolio Admin v1.0.0</div>
         </div>
       </div>
